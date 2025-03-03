@@ -31,3 +31,46 @@ export async function getServerConversations() {
 }
 
 
+
+
+const POKEURL = "https://pokeapi.co/api/v2/pokemon/";
+
+
+async function movimientos(name) {
+
+    try {
+        const response = await fetch(`${POKEURL}${name}`);
+        if (!response) throw new Error('Error en la peticion')
+
+        const data = await response.json();
+
+       
+        const movimientos_nombre = await Promise.all(
+            data.moves.map(async (move) => {
+                const res_movimiento_data = await fetch(move.move.url);
+                if (!res_movimiento_data.ok) throw new Error('Error al obtener movimiento');
+                
+                const movimiento_data = await res_movimiento_data.json();
+
+                const traduccion = movimiento_data.names.find(
+                    (name) => name.language.name === 'es'
+                );
+
+                return (traduccion) ?  traduccion.name : 'no hay';
+            })
+        );
+
+        return movimientos_nombre;
+
+
+        
+
+
+    } catch (error) {
+        throw error
+    }
+
+
+}
+
+movimientos('pikachu').then(data => console.log(data));

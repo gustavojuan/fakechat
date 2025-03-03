@@ -59,8 +59,8 @@ const chatSlice = createSlice({
                 
 
             }),
-            builder.addCase(getAsyncData.rejected, (state) => {
-                
+            builder.addCase(getAsyncData.rejected, (state) => {           
+                state.inputText = action.payload.body
             })
     }
 

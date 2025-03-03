@@ -36,10 +36,10 @@ export async function getServerConversations() {
 const POKEURL = "https://pokeapi.co/api/v2/pokemon/";
 
 
-async function movimientos(name) {
+export async function movimientos(name) {
 
     try {
-        const response = await fetch(`${POKEURL}${name}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
         if (!response) throw new Error('Error en la peticion')
 
         const data = await response.json();

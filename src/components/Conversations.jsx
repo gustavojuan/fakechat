@@ -5,6 +5,7 @@ import { getAsyncConversations } from "../redux/chatSlice";
 export function Conversations() {
 
   const conversations = useSelector((state)=>state.chat.conversations)
+  const movimientos = useSelector((state)=>state.chat.movimientos)
   const dispatch = useDispatch();
 
 useEffect(() => {
@@ -18,6 +19,13 @@ useEffect(() => {
           conversations.map((conversation,index)=> {
             return ( 
               <li key={index}>{conversation.name}</li>
+            )
+          })
+        }
+          {
+          movimientos.map((movimiento,index)=> {
+            return ( 
+              <li key={index}>{movimiento}</li>
             )
           })
         }

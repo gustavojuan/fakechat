@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getServerConversations, getServerData } from "./api";
+import { getServerConversations, getServerData, movimientos } from "./api";
+
+
 const initialState = {
     activeInput: false,
     inputText: '',
     conversation: [],
-    conversations: []
+    conversations: [],
+    movimientos:[]
 }
 
 
@@ -20,7 +23,6 @@ export const getAsyncData = createAsyncThunk(
     }
 )
 
-
 export const getAsyncConversations = createAsyncThunk(
     '/chat/getConversations',
     async (text) => {
@@ -29,6 +31,14 @@ export const getAsyncConversations = createAsyncThunk(
     }
 )
 
+
+export const getMovimientosasync   =createAsyncThunk(
+    '/chat/pokemons',
+    async(pokemon)=> {
+        const response = await movimientos(pokemon);
+        return response
+    }
+)
 
 const chatSlice = createSlice({
     name: 'chat',
@@ -63,6 +73,9 @@ const chatSlice = createSlice({
             .addCase(getAsyncConversations.fulfilled,(state,action)=> {                
                 
                 state.conversations = action.payload
+            })
+            .addCase(getMovimientosasync.fulfilled, (state,action)=>{
+                state.movimientos = action.payload
             })
     }
 

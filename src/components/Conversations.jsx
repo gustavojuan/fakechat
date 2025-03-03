@@ -1,25 +1,26 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAsyncConversations } from "../redux/chatSlice";
+
 export function Conversations() {
+
+  const conversations = useSelector((state)=>state.chat.conversations)
+  const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(getAsyncConversations());
+}, [dispatch])
+
   return (
     <div className="conversations">
       <ul>
-        <li>
-          <a href="#">Redis Docker Container Persistence</a>
-        </li>
-        <li>
-          <a href="#">Evento de fila corrigido.</a>
-        </li>
-        <li>
-          <a href="#">Debug BullMQ Configuration</a>
-        </li>
-        <li>
-          <a href="#">Docker exercise: Two containers.</a>
-        </li>
-        <li>
-          <a href="#">Client and Consumer: BullMQ</a>
-        </li>
-        <li>
-          <a href="#">Set Redis Password programmatically</a>
-        </li>
+        {
+          conversations.map((conversation,index)=> {
+            return ( 
+              <li key={index}>{conversation.name}</li>
+            )
+          })
+        }
       </ul>
     </div>
   );

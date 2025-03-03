@@ -1,33 +1,27 @@
-import favicon from '../assets/favicon-32x32.png'
+import { useSelector } from "react-redux";
+import favicon from "../assets/favicon-32x32.png";
 export function Conversation() {
+  const conversation = useSelector((state) => state.chat.conversation);
+
+  console.log(conversation);
   return (
     <div className="messages">
       <ul>
-        <li>
-          <div className="message-container">
-            <div className="avatar user">
-              <img src={favicon} alt="avatar" />
-            </div>
-            <div className="">
-              <div className="role">You</div>
-              <div className="content">Hello</div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div className="message-container">
-            <div className="avatar assistant">
-              <img src={favicon} alt="avatar" />
-            </div>
-            <div className="">
-              <div className="role">ceedGPT</div>
-              <div className="content">
-                Hello! It's nice to meet you. Is there something I can help you
-                with, or would you like to chat?
+        {conversation.map((line, index) => {
+          return (
+            <li key={index}>
+              <div className="message-container">
+                <div className={`${line.user} avatar`}>
+                  <img src={favicon} alt="avatar" />
+                </div>
+                <div className="">
+                  <div className="role">{(line.user == 'user') ? 'user' : 'assistant'}</div>
+                  <div className="content">{line.text}</div>
+                </div>
               </div>
-            </div>
-          </div>
-        </li>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

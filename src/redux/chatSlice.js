@@ -7,7 +7,6 @@ const initialState = {
 
 
 async function getServerData(text) {
-
     const number = text.length;
 
     try {
@@ -25,7 +24,6 @@ export const getAsyncData = createAsyncThunk(
         try {
             const response = await getServerData(text)
             return response;
-
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -55,8 +53,7 @@ const chatSlice = createSlice({
         }),
             builder.addCase(getAsyncData.fulfilled, (state, action) => {                
                 const line = { user: 'gpt', text: action.payload.body }
-                state.conversation.push(line)
-                
+                state.conversation.push(line)                
 
             }),
             builder.addCase(getAsyncData.rejected, (state) => {           

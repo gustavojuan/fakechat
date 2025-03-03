@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import UserInputArrow from "./Arrow";
 import { getAsyncData, sendPrompt, setInputText } from "../redux/chatSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 
 
@@ -18,11 +18,13 @@ function adjustTextarea() {
 const dispatch = useDispatch();
 const activeInput = useSelector(state => state.chat.activeInput);
 const inputText = useSelector(state => state.chat.inputText);
+const textRef = useRef(null);
+
 
 
 useEffect(()=>{
   adjustTextarea();
-},[inputText])
+},[textRef, inputText])
 
 
 const handleOnChange = (e) => {
@@ -38,7 +40,7 @@ const handleOnClick = () => {
       <div className="input-container">
 
         
-        <textarea className="user-input" placeholder="Escribe un mensaje..."  onChange={(e)=>handleOnChange(e)} value={inputText}>
+        <textarea ref={textRef} className="user-input" placeholder="Escribe un mensaje..."  onChange={(e)=>handleOnChange(e)} value={inputText}>
       
         </textarea>
         
